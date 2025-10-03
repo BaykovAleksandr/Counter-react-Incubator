@@ -51,12 +51,16 @@
 .counter {
   font-size: 50px;
   border: 1px solid green;
+  border-radius: 5px;
   padding: 0px 195px;
 }
 
 .counterRed {
   color: red;
   font-size: 50px;
+  border: 1px solid green;
+  padding: 0px 195px;
+  border-radius: 5px;
 }
 
 .card {
@@ -66,6 +70,7 @@
   justify-content: space-around;
   width: 70%;
   padding: 2em;
+  border-radius: 5px;
   
 }
 
