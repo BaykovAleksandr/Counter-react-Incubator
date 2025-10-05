@@ -1,11 +1,11 @@
 import "./App.css";
 
-import { Card } from "./layout/Card";
+import { Counter } from "./layout/Counter";
 
 function App() {
   return (
     <div className="App">
-      <Card/>
+      <Counter/>
     </div>
   );
 }

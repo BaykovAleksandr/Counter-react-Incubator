@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../App.css";
 import { Button } from "../components/Button";
 
-export const Card = () => {
+export const Counter = () => {
   const MAXIMUM = 5;
   const MINIMUM = 0;
   const [count, setCount] = useState<number>(MINIMUM);
@@ -15,6 +15,10 @@ export const Card = () => {
 
   const onCliCkReset = () => {
     setCount(MINIMUM);
+  };
+
+  const onCliCkSet = () => {
+    
   };
   return (
     <div className="wrapper">
@@ -29,6 +33,11 @@ export const Card = () => {
           name={"RESET"}
           callback={onCliCkReset}
           disabled={count === MINIMUM}
+        />
+        <Button
+          name={"SET"}
+          callback={onCliCkSet}
+    
         />
       </div>
     </div>
