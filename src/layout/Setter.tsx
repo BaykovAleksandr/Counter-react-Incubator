@@ -1,12 +1,21 @@
-import { useState, type ChangeEvent } from "react";
+import type { ChangeEvent } from "react";
 import "../App.css";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 
-export const Setter = () => {
-  const [maxValue, setMaxValue] = useState(10);
-  const [minValue, setMinValue] = useState(0);
+type setterPropsType = {
+  minValue: number;
+  maxValue: number;
+  setMaxValue: (a: number) => void;
+  setMinValue: (a: number) => void;
+};
 
+export const Setter = ({
+  minValue,
+  maxValue,
+  setMaxValue,
+  setMinValue,
+}: setterPropsType) => {
   const maxValueHandler = (e: ChangeEvent<HTMLInputElement>) =>
     setMaxValue(Number(e.target.value));
   const minValueHandler = (e: ChangeEvent<HTMLInputElement>) =>
