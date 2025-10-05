@@ -8,6 +8,7 @@ type setterPropsType = {
   maxValue: number;
   setMaxValue: (a: number) => void;
   setMinValue: (a: number) => void;
+  setCount: (a: number) => void;
 };
 
 export const Setter = ({
@@ -15,6 +16,8 @@ export const Setter = ({
   maxValue,
   setMaxValue,
   setMinValue,
+  setCount
+  
 }: setterPropsType) => {
   const maxValueHandler = (e: ChangeEvent<HTMLInputElement>) =>
     setMaxValue(Number(e.target.value));
@@ -46,7 +49,7 @@ export const Setter = ({
         </div>
       </div>
       <div className="card">
-        <Button name={"SET"} callback={() => alert("Setter")} />
+        <Button name={"SET"} callback={() => setCount(minValue)} />
       </div>
     </div>
   );

@@ -1,43 +1,41 @@
-import { useState } from "react";
+
 import "../App.css";
 import { Button } from "../components/Button";
 
-export const Counter = () => {
-  const MAXIMUM = 5;
-  const MINIMUM = 0;
-  const [count, setCount] = useState<number>(MINIMUM);
+type counterPropsType = {
+  count: number;
+  setCount: (a: number) => void;
+  minValue: number;
+  maxValue: number;
+};
+
+export const Counter = ({count, setCount, minValue, maxValue}: counterPropsType) => {
+  
 
   const incCounter = () => {
-    if (count < MAXIMUM) {
+    if (count < maxValue) {
       setCount(count + 1);
     }
   };
 
   const onCliCkReset = () => {
-    setCount(MINIMUM);
+    setCount(minValue);
   };
 
-  const onCliCkSet = () => {
-    alert('Counter')
-  };
+
   return (
     <div className="wrapper">
-      <div className={count === MAXIMUM ? "counterRed" : "counter"}>{count}</div>
+      <div className={count === maxValue ? "counterRed" : "counter"}>{count}</div>
       <div className="card">
         <Button
           name={"INC"}
           callback={incCounter}
-          disabled={count >= MAXIMUM}
+          disabled={count >= maxValue}
         />
         <Button
           name={"RESET"}
           callback={onCliCkReset}
-          disabled={count === MINIMUM}
-        />
-        <Button
-          name={"SET"}
-          callback={onCliCkSet}
-    
+          disabled={count === minValue}
         />
       </div>
     </div>
