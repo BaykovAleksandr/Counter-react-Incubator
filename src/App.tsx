@@ -1,11 +1,13 @@
 import "./App.css";
 
+import { Setter } from "./layout/Setter";
 import { Counter } from "./layout/Counter";
 
 function App() {
   return (
-    <div className="App">
-      <Counter/>
+    <div className="main">
+      <Counter />
+      <Setter />
     </div>
   );
 }

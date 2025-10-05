@@ -18,11 +18,11 @@ export const Counter = () => {
   };
 
   const onCliCkSet = () => {
-    
+    alert('Counter')
   };
   return (
     <div className="wrapper">
-      <p className={count === MAXIMUM ? "counterRed" : "counter"}>{count}</p>
+      <div className={count === MAXIMUM ? "counterRed" : "counter"}>{count}</div>
       <div className="card">
         <Button
           name={"INC"}
