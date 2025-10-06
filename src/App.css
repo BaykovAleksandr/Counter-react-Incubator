@@ -30,16 +30,17 @@
 }
 
 .counter {
-  font-size: 4rem;
+  font-size: 3rem;
   font-weight: bold;
   color: #61dafb;
-  padding: 30px 60px;
   border: 3px solid #61dafb;
   border-radius: 10px;
-  min-width: 200px;
+  min-width: 340px;
+  min-height: 160px;
+  line-height: 160px;
   text-align: center;
   background-color: transparent;
-  margin: 0;
+  
 }
 
 .counter-input-group {
@@ -77,16 +78,15 @@
   margin-left: 40px;
 }
 .counterRed {
-  font-size: 4rem;
+  font-size: 3rem;
   font-weight: bold;
   color: #ff4444;
-  padding: 30px 60px;
   border: 3px solid #ff4444;
   border-radius: 10px;
-  min-width: 200px;
-  text-align: center;
+  min-width: 340px;
+  min-height: 160px;
+  line-height: 160px;
   background-color: transparent;
-  margin: 0;
 }
 
 .card {

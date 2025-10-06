@@ -7,9 +7,11 @@ type counterPropsType = {
   setCount: (a: number) => void;
   minValue: number;
   maxValue: number;
+  error: boolean;
+  
 };
 
-export const Counter = ({count, setCount, minValue, maxValue}: counterPropsType) => {
+export const Counter = ({count, setCount, minValue, maxValue, error}: counterPropsType) => {
   
 
   const incCounter = () => {
@@ -25,7 +27,7 @@ export const Counter = ({count, setCount, minValue, maxValue}: counterPropsType)
 
   return (
     <div className="wrapper">
-      <div className={count === maxValue ? "counterRed" : "counter"}>{count}</div>
+      <div className={count === maxValue || error ? "counterRed" : "counter"}>{error? 'Incorrect value':count}</div>
       <div className="card">
         <Button
           name={"INC"}

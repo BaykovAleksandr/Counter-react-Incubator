@@ -1,4 +1,4 @@
-import type { ChangeEvent } from "react";
+import { type ChangeEvent } from "react";
 import "../App.css";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
@@ -9,6 +9,8 @@ type setterPropsType = {
   setMaxValue: (a: number) => void;
   setMinValue: (a: number) => void;
   setCount: (a: number) => void;
+  error: boolean;
+  setError: (isError: boolean) => void;
 };
 
 export const Setter = ({
@@ -16,13 +18,28 @@ export const Setter = ({
   maxValue,
   setMaxValue,
   setMinValue,
-  setCount
-  
+  setCount,
+  setError,
+  error,
 }: setterPropsType) => {
-  const maxValueHandler = (e: ChangeEvent<HTMLInputElement>) =>
-    setMaxValue(Number(e.target.value));
-  const minValueHandler = (e: ChangeEvent<HTMLInputElement>) =>
-    setMinValue(Number(e.target.value));
+  const maxValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const targetValueMax = Number(e.target.value);
+    if (targetValueMax <= minValue || targetValueMax === minValue) {
+      setError(true);
+    } else {
+      setError(false);
+      setMaxValue(targetValueMax);
+    }
+  };
+  const minValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const targetValueMin = Number(e.target.value);
+    if (targetValueMin < 0 || targetValueMin >= maxValue) {
+      setError(true);
+    } else {
+      setError(false);
+      setMinValue(targetValueMin);
+    }
+  };
 
   return (
     <div className="wrapper">
@@ -49,7 +66,11 @@ export const Setter = ({
         </div>
       </div>
       <div className="card">
-        <Button name={"SET"} callback={() => setCount(minValue)} />
+        <Button
+          name={"SET"}
+          callback={() => setCount(minValue)}
+          disabled={error}
+        />
       </div>
     </div>
   );
