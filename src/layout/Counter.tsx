@@ -1,19 +1,23 @@
-
 import "../App.css";
 import { Button } from "../components/Button";
 
 type counterPropsType = {
   count: number;
-  setCount: (a: number) => void;
+  setCount: (count: number) => void;
   minValue: number;
   maxValue: number;
   error: boolean;
-  
+  active: boolean;
 };
 
-export const Counter = ({count, setCount, minValue, maxValue, error}: counterPropsType) => {
-  
-
+export const Counter = ({
+  count,
+  setCount,
+  minValue,
+  maxValue,
+  error,
+  active
+}: counterPropsType) => {
   const incCounter = () => {
     if (count < maxValue) {
       setCount(count + 1);
@@ -24,20 +28,26 @@ export const Counter = ({count, setCount, minValue, maxValue, error}: counterPro
     setCount(minValue);
   };
 
-
   return (
     <div className="wrapper">
-      <div className={count === maxValue || error ? "counterRed" : "counter"}>{error? 'Incorrect value':count}</div>
+      {!active && <div className="message">Enter value and press set</div>}
+      {active && (
+        <div
+          className={count === maxValue || error ? "counter-warn" : "counter"}
+        >
+          {error ? "Incorrect value" : count}
+        </div>
+      )}
       <div className="card">
         <Button
           name={"INC"}
           callback={incCounter}
-          disabled={count >= maxValue}
+          disabled={count >= maxValue || error || !active}
         />
         <Button
           name={"RESET"}
           callback={onCliCkReset}
-          disabled={count === minValue}
+          disabled={count === minValue || error || !active}
         />
       </div>
     </div>

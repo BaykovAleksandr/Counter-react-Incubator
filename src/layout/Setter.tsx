@@ -6,11 +6,13 @@ import { Input } from "../components/Input";
 type setterPropsType = {
   minValue: number;
   maxValue: number;
-  setMaxValue: (a: number) => void;
-  setMinValue: (a: number) => void;
-  setCount: (a: number) => void;
+  setMaxValue: (value: number) => void;
+  setMinValue: (value: number) => void;
+  setCount: (value: number) => void;
   error: boolean;
   setError: (isError: boolean) => void;
+  active: boolean;
+  setActive: (isActive: boolean) => void;
 };
 
 export const Setter = ({
@@ -21,9 +23,12 @@ export const Setter = ({
   setCount,
   setError,
   error,
+  active,
+  setActive,
 }: setterPropsType) => {
   const maxValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const targetValueMax = Number(e.target.value);
+    setActive(false);
     setMaxValue(targetValueMax);
     if (targetValueMax <= minValue || targetValueMax === minValue) {
       setError(true);
@@ -33,6 +38,7 @@ export const Setter = ({
   };
   const minValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const targetValueMin = Number(e.target.value);
+    setActive(false);
     setMinValue(targetValueMin);
     if (targetValueMin < 0 || targetValueMin >= maxValue) {
       setError(true);
@@ -44,7 +50,7 @@ export const Setter = ({
   return (
     <div className="wrapper">
       <div className="counter-input-group">
-        <div className="counter-input">
+        <div className={error ? "counter-input input-warn" : "counter-input"}>
           <label>
             max value:
             <Input
@@ -65,11 +71,14 @@ export const Setter = ({
           </label>
         </div>
       </div>
-      <div className="card">
+      <div className="card card-setter">
         <Button
           name={"SET"}
-          callback={() => setCount(minValue)}
-          disabled={error}
+          callback={() => {
+            setActive(true);
+            setCount(minValue);
+          }}
+          disabled={active || error}
         />
       </div>
     </div>

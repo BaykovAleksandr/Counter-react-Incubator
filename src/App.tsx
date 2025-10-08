@@ -9,6 +9,7 @@ function App() {
   const [minValue, setMinValue] = useState(0);
   const [count, setCount] = useState(0);
   const [error, setError] = useState(false);
+  const [active, setActive] = useState(true);
 
   useEffect(() => {
     const newCount = localStorage.getItem("counterValue");
@@ -29,6 +30,7 @@ function App() {
         minValue={minValue}
         maxValue={maxValue}
         error={error}
+        active={active}
       />
       <Setter
         minValue={minValue}
@@ -38,6 +40,8 @@ function App() {
         error={error}
         setCount={setCount}
         setError={setError}
+        active={active}
+        setActive={setActive}
       />
     </div>
   );
