@@ -7,6 +7,7 @@ type CounterPropsType = {
   minValue: number;
   maxValue: number;
   error: boolean;
+  setError: (isError: boolean) => void
   active: boolean;
 };
 
@@ -16,26 +17,34 @@ export const Counter = ({
   minValue,
   maxValue,
   error,
-  active
+  setError,
+  active,
 }: CounterPropsType) => {
   const incCounter = () => {
-    if (count < maxValue) {
+    if (maxValue - count > 0) {
       setCount(count + 1);
     }
+    else {
+      // setCount(count + 1)
+      setError(true);
+
+    }
+
   };
 
   const onCliCkReset = () => {
     setCount(minValue);
   };
-
+console.log(error)
   return (
     <div className="wrapper">
-      {!active && <div className="message">Enter value and press set</div>}
+      {(!active && !error ) && <div className="message">Enter value and press set</div>}
+      {(!active && error) && <div className="message warn">"Incorrect value"</div>}
       {active && (
         <div
           className={count === maxValue || error ? "counter-warn" : "counter"}
         >
-          {error ? "Incorrect value" : count}
+{count}
         </div>
       )}
       <div className="card">
