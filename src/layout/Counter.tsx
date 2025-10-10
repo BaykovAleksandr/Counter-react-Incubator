@@ -1,7 +1,7 @@
 import "../App.css";
 import { Button } from "../components/Button";
 
-type counterPropsType = {
+type CounterPropsType = {
   count: number;
   setCount: (count: number) => void;
   minValue: number;
@@ -17,7 +17,7 @@ export const Counter = ({
   maxValue,
   error,
   active
-}: counterPropsType) => {
+}: CounterPropsType) => {
   const incCounter = () => {
     if (count < maxValue) {
       setCount(count + 1);

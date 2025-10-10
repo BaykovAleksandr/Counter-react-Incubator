@@ -3,7 +3,7 @@ import "../App.css";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 
-type setterPropsType = {
+type SetterPropsType = {
   minValue: number;
   maxValue: number;
   setMaxValue: (value: number) => void;
@@ -25,7 +25,7 @@ export const Setter = ({
   error,
   active,
   setActive,
-}: setterPropsType) => {
+}: SetterPropsType) => {
   const maxValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const targetValueMax = Number(e.target.value);
     setActive(false);
