@@ -1,13 +1,15 @@
 import "../App.css";
-import { Button } from "../components/Button";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import { Paper, Typography, Alert } from "@mui/material";
 
 type CounterPropsType = {
   count: number;
   setCount: (count: number) => void;
   minValue: number;
   maxValue: number;
-  error: boolean;
-  setError: (isError: boolean) => void
+  maxError: boolean;
+  minError: boolean;
   active: boolean;
 };
 
@@ -16,49 +18,84 @@ export const Counter = ({
   setCount,
   minValue,
   maxValue,
-  error,
-  setError,
+  maxError,
+  minError,
   active,
 }: CounterPropsType) => {
   const incCounter = () => {
     if (maxValue - count > 0) {
       setCount(count + 1);
     }
-    else {
-      // setCount(count + 1)
-      setError(true);
-
-    }
-
   };
 
-  const onCliCkReset = () => {
+  const onClickReset = () => {
     setCount(minValue);
   };
-console.log(error)
+
+  const hasAnyError = maxError || minError;
+
   return (
-    <div className="wrapper">
-      {(!active && !error ) && <div className="message">Enter value and press set</div>}
-      {(!active && error) && <div className="message warn">"Incorrect value"</div>}
-      {active && (
-        <div
-          className={count === maxValue || error ? "counter-warn" : "counter"}
-        >
-{count}
-        </div>
+    <Box className="wrapper">
+      {/* Сообщения */}
+      {!active && !hasAnyError && (
+        <Alert severity="info" sx={{ mb: 2 }}>
+          Enter value and press set
+        </Alert>
       )}
-      <div className="card">
-        <Button
-          name={"INC"}
-          callback={incCounter}
-          disabled={count >= maxValue || error || !active}
-        />
-        <Button
-          name={"RESET"}
-          callback={onCliCkReset}
-          disabled={count === minValue || error || !active}
-        />
-      </div>
-    </div>
+      {!active && hasAnyError && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          Incorrect value
+        </Alert>
+      )}
+
+      {/* Счетчик */}
+      {active && (
+        <Paper
+          elevation={3}
+          sx={{
+            p: 4,
+            mb: 2,
+            textAlign: "center",
+            backgroundColor:
+              count === maxValue || hasAnyError
+                ? "error.light"
+                : "primary.main",
+            color: "white",
+          }}
+        >
+          <Typography
+            variant="h2"
+            component="div"
+            sx={{ color: "white", fontWeight: "bold" }}
+          >
+            {count}
+          </Typography>
+        </Paper>
+      )}
+
+      {/* Кнопки */}
+      <Paper elevation={3} sx={{ p: 2 }}>
+        <Box sx={{ display: "flex", gap: 2 }}>
+          <Button
+            variant="contained"
+            onClick={incCounter}
+            disabled={count >= maxValue || hasAnyError || !active}
+            fullWidth
+            size="large"
+          >
+            INC
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={onClickReset}
+            disabled={count === minValue || hasAnyError || !active}
+            fullWidth
+            size="large"
+          >
+            RESET
+          </Button>
+        </Box>
+      </Paper>
+    </Box>
   );
 };

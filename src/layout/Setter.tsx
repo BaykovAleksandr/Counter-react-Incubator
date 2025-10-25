@@ -1,7 +1,9 @@
 import { type ChangeEvent } from "react";
 import "../App.css";
-import { Button } from "../components/Button";
 import { Input } from "../components/Input";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import { Paper, FormControl } from "@mui/material";
 
 type SetterPropsType = {
   minValue: number;
@@ -9,8 +11,10 @@ type SetterPropsType = {
   setMaxValue: (value: number) => void;
   setMinValue: (value: number) => void;
   setCount: (value: number) => void;
-  error: boolean;
-  setError: (isError: boolean) => void;
+  maxError: boolean;
+  minError: boolean;
+  setMaxError: (isError: boolean) => void;
+  setMinError: (isError: boolean) => void;
   active: boolean;
   setActive: (isActive: boolean) => void;
 };
@@ -21,8 +25,10 @@ export const Setter = ({
   setMaxValue,
   setMinValue,
   setCount,
-  setError,
-  error,
+  setMaxError,
+  setMinError,
+  maxError,
+  minError,
   active,
   setActive,
 }: SetterPropsType) => {
@@ -30,57 +36,89 @@ export const Setter = ({
     const targetValueMax = Number(e.target.value);
     setActive(false);
     setMaxValue(targetValueMax);
-    if (targetValueMax <= minValue || targetValueMax === minValue) {
-      setError(true);
+
+    // Проверяем ошибки только для max значения
+    if (targetValueMax <= minValue) {
+      setMaxError(true);
     } else {
-      setError(false);
+      setMaxError(false);
+      // Если исправили max ошибку, проверяем min ошибку
+      if (minValue >= targetValueMax) {
+        setMinError(true);
+      } else {
+        setMinError(false);
+      }
     }
   };
+
   const minValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const targetValueMin = Number(e.target.value);
     setActive(false);
     setMinValue(targetValueMin);
+
+    // Проверяем ошибки только для min значения
     if (targetValueMin < 0 || targetValueMin >= maxValue) {
-      setError(true);
+      setMinError(true);
     } else {
-      setError(false);
+      setMinError(false);
+      // Если исправили min ошибку, проверяем max ошибку
+      if (maxValue <= targetValueMin) {
+        setMaxError(true);
+      } else {
+        setMaxError(false);
+      }
     }
   };
 
+  const hasAnyError = maxError || minError;
+
   return (
-    <div className="wrapper">
-      <div className="counter-input-group">
-        <div className={error ? "counter-input input-warn" : "counter-input"}>
-          <label>
-            max value:
+    <Box className="wrapper">
+      <Paper elevation={3} sx={{ p: 3, mb: 2 }}>
+        <Box className="counter-input-group" sx={{ mb: 2 }}>
+          <FormControl fullWidth sx={{ mb: 2 }}>
             <Input
               value={maxValue}
               name="max-value"
               callback={maxValueHandler}
+              label="Max value"
+              error={maxError}
+              helperText={
+                maxError ? "Max value must be greater than min value" : ""
+              }
             />
-          </label>
-        </div>
-        <div className={error ? "counter-input input-warn" : "counter-input"}>
-          <label>
-            min value:
+          </FormControl>
+          <FormControl fullWidth>
             <Input
               value={minValue}
               name="min-value"
               callback={minValueHandler}
+              label="Min value"
+              error={minError}
+              helperText={
+                minError
+                  ? "Min value must be non-negative and less than max"
+                  : ""
+              }
             />
-          </label>
-        </div>
-      </div>
-      <div className="card card-setter">
+          </FormControl>
+        </Box>
+      </Paper>
+
+      <Paper elevation={3} sx={{ p: 2 }} className="card card-setter">
         <Button
-          name={"SET"}
-          callback={() => {
+          variant="contained"
+          onClick={() => {
             setActive(true);
             setCount(minValue);
           }}
-          disabled={active || error}
-        />
-      </div>
-    </div>
+          disabled={active || hasAnyError}
+          fullWidth
+          size="large"
+        >
+          SET
+        </Button>
+      </Paper>
+    </Box>
   );
 };

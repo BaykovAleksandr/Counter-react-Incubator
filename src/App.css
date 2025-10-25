@@ -1,126 +1,45 @@
 #root {
   max-width: 1280px;
+  width: 100%;
+  height: 100vh;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
 .main {
   display: flex;
   gap: 50px;
+  justify-content: center;
+  align-items: stretch; /* Растягиваем элементы по высоте */
 }
 
 @media (width < 768px) {
   .main {
     flex-direction: column;
+    align-items: center;
   }
 }
 
 .wrapper {
   display: flex;
   flex-direction: column;
+  justify-content: space-between; /* Распределяем пространство между элементами */
   align-items: center;
   gap: 30px;
   padding: 40px;
   background-color: #282c34;
   border-radius: 15px;
   border: 3px solid #61dafb;
-  max-width: 400px;
-  margin: 50px auto;
-}
-
-.counter {
-  font-size: 3rem;
-  font-weight: bold;
-  color: #61dafb;
-  border: 3px solid #61dafb;
-  border-radius: 10px;
-  min-width: 340px;
-  min-height: 160px;
-  line-height: 160px;
-  text-align: center;
-  background-color: transparent;
-  
-}
-
-.counter-input-group {
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: #61dafb;
-  padding: 30px 60px;
-  border: 3px solid #61dafb;
-  border-radius: 10px;
-  min-width: 200px;
-  text-align: center;
-  background-color: transparent;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-}
-
-
-.counter-input label {
-  font-size: 0.9rem;
-  color: #fff;
-  
-}
-
-.counter-input input {
-  width: 80px;
-  padding: 4px 8px;
-  border: 2px solid #fff;
-  border-radius: 4px;
-  text-align: center;
-  background: #fff;
-  color: #282c34;
-  font-size: 1rem;
-  margin-left: 40px;
-}
-
-.input-warn input{
-  background-color: #ff4444;
-}
-
-.counter-warn {
-  font-size: 3rem;
-  font-weight: bold;
-  color: #ff4444;
-  border: 3px solid #ff4444;
-  border-radius: 10px;
-  min-width: 340px;
-  min-height: 160px;
-  line-height: 160px;
-  background-color: transparent;
+  width: 400px;
+  min-height: 400px; /* Фиксированная минимальная высота */
+  box-sizing: border-box;
 }
 
 .card {
   display: flex;
   gap: 30px;
-  padding: 20px 80px;
-  border: 3px solid #61dafb;
-  border-radius: 10px;
-  background-color: transparent;
-}
-
-.card-setter {
-  padding: 20px 135px;
-}
-
-.message {
-  font-size: 1.3rem;
-  font-weight: bold;
-  color: #61dafb;
-  border: 3px solid #61dafb;
-  border-radius: 10px;
-  min-width: 340px;
-  min-height: 160px;
-  line-height: 160px;
-  text-align: center;
-  background-color: transparent;
-}
-
-.warn {
-  color: #ff4444;
-  border: 3px solid #ff4444;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: auto; /* Прижимаем кнопки к низу */
 }
