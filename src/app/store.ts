@@ -1,9 +1,12 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { errorsReducer } from '../model/errors-reducer';
+import { counterReducer } from '../model/counter-reducer';
 
 
 // объединение reducer'ов с помощью combineReducers
 const rootReducer = combineReducers({
-
+errors: errorsReducer,
+counter: counterReducer
 });
 
 // создание store

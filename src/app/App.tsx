@@ -56,10 +56,6 @@ function App() {
             maxValue={maxValue}
             setMaxValue={setMaxValue}
             setMinValue={setMinValue}
-            maxError={maxError}
-            minError={minError}
-            setMaxError={setMaxError}
-            setMinError={setMinError}
             setCount={setCount}
             active={active}
             setActive={setActive}

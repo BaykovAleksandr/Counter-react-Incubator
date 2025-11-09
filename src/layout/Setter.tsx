@@ -4,68 +4,56 @@ import { Input } from "../components/Input";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { Paper, FormControl } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { setMaxErrorAC, setMinErrorAC } from "../model/errors-reducer";
+import { useAppSelector } from "../common/hooks/useAppSelector";
+import {
+  setActiveAC,
+  setCountAC,
+  setMaxValueAC,
+  setMinValueAC,
+} from "../model/counter-reducer";
 
-type SetterPropsType = {
-  minValue: number;
-  maxValue: number;
-  setMaxValue: (value: number) => void;
-  setMinValue: (value: number) => void;
-  setCount: (value: number) => void;
-  maxError: boolean;
-  minError: boolean;
-  setMaxError: (isError: boolean) => void;
-  setMinError: (isError: boolean) => void;
-  active: boolean;
-  setActive: (isActive: boolean) => void;
-};
-
-export const Setter = ({
-  minValue,
-  maxValue,
-  setMaxValue,
-  setMinValue,
-  setCount,
-  setMaxError,
-  setMinError,
-  maxError,
-  minError,
-  active,
-  setActive,
-}: SetterPropsType) => {
+export const Setter = () => {
+  const dispatch = useDispatch();
+  const maxError = useAppSelector((state) => state.errors.maxError);
+  const minError = useAppSelector((state) => state.errors.minError);
+  const minValue = useAppSelector((state) => state.counter.minValue);
+  const maxValue = useAppSelector((state) => state.counter.maxValue);
+  const active = useAppSelector((state) => state.counter.active);
   const maxValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const targetValueMax = Number(e.target.value);
-    setActive(false);
-    setMaxValue(targetValueMax);
+    const currentMinValue = minValue;
+    dispatch(setActiveAC({ isActive: false }));
+    dispatch(setMaxValueAC({ value: targetValueMax }));
 
     // Проверяем ошибки только для max значения
-    if (targetValueMax <= minValue) {
-      setMaxError(true);
+    if (targetValueMax <= currentMinValue) {
+      dispatch(setMaxErrorAC({ isError: true }));
     } else {
-      setMaxError(false);
-      // Если исправили max ошибку, проверяем min ошибку
-      if (minValue >= targetValueMax) {
-        setMinError(true);
+      dispatch(setMaxErrorAC({ isError: false }));
+      if (currentMinValue >= targetValueMax) {
+        dispatch(setMinErrorAC({ isError: true }));
       } else {
-        setMinError(false);
+        dispatch(setMinErrorAC({ isError: false }));
       }
     }
   };
 
   const minValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const targetValueMin = Number(e.target.value);
-    setActive(false);
-    setMinValue(targetValueMin);
+    const currentMaxValue = maxValue;
+    dispatch(setActiveAC({ isActive: false }));
+    dispatch(setMinValueAC({ value: targetValueMin }));
 
-    // Проверяем ошибки только для min значения
-    if (targetValueMin < 0 || targetValueMin >= maxValue) {
-      setMinError(true);
+    if (targetValueMin < 0 || targetValueMin >= currentMaxValue) {
+      dispatch(setMinErrorAC({ isError: true }));
     } else {
-      setMinError(false);
-      // Если исправили min ошибку, проверяем max ошибку
-      if (maxValue <= targetValueMin) {
-        setMaxError(true);
+      dispatch(setMinErrorAC({ isError: false }));
+      if (currentMaxValue <= targetValueMin) {
+        dispatch(setMaxErrorAC({ isError: true }));
       } else {
-        setMaxError(false);
+        dispatch(setMaxErrorAC({ isError: false }));
       }
     }
   };
@@ -109,8 +97,8 @@ export const Setter = ({
         <Button
           variant="contained"
           onClick={() => {
-            setActive(true);
-            setCount(minValue);
+            dispatch(setActiveAC({ isActive: true }));
+            dispatch(setCountAC({ count: minValue }));
           }}
           disabled={active || hasAnyError}
           fullWidth
