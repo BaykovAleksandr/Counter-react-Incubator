@@ -1,19 +1,12 @@
 import { createAction, createReducer } from "@reduxjs/toolkit";
 
-// const [maxValue, setMaxValue] = useState(5);
-//   const [minValue, setMinValue] = useState(1);
-//   const [count, setCount] = useState(0);
-//   const [active, setActive] = useState(true);
-
 export const setMaxValueAC = createAction<{ value: number }>(
   "counter/set_max_value"
 );
 export const setMinValueAC = createAction<{ value: number }>(
   "counter/set_min_value"
 );
-export const setCountAC = createAction<{ count: number }>(
-  "counter/set_count"
-);
+export const setCountAC = createAction<{ count: number }>("counter/set_count");
 export const setActiveAC = createAction<{ isActive: boolean }>(
   "counter/set_active"
 );
@@ -28,7 +21,7 @@ const initialState: initialStateType = {
   maxValue: 5,
   minValue: 1,
   count: 0,
-  active: true
+  active: true,
 };
 
 export const counterReducer = createReducer(initialState, (builder) => {
@@ -39,10 +32,10 @@ export const counterReducer = createReducer(initialState, (builder) => {
     .addCase(setMinValueAC, (state, action) => {
       state.minValue = action.payload.value;
     })
-	.addCase(setCountAC, (state, action) => {
-		state.count = action.payload.count
-	})
-	.addCase(setActiveAC, (state, action) => {
-		state.active = action.payload.isActive
-	});
+    .addCase(setCountAC, (state, action) => {
+      state.count = action.payload.count;
+    })
+    .addCase(setActiveAC, (state, action) => {
+      state.active = action.payload.isActive;
+    });
 });

@@ -13,21 +13,26 @@ import {
   setMaxValueAC,
   setMinValueAC,
 } from "../model/counter-reducer";
+import { selectMaxError, selectMinError } from "../model/errors-selectors";
+import {
+  selectActive,
+  selectMaxValue,
+  selectMinValue,
+} from "../model/counter-selectors";
 
 export const Setter = () => {
   const dispatch = useDispatch();
-  const maxError = useAppSelector((state) => state.errors.maxError);
-  const minError = useAppSelector((state) => state.errors.minError);
-  const minValue = useAppSelector((state) => state.counter.minValue);
-  const maxValue = useAppSelector((state) => state.counter.maxValue);
-  const active = useAppSelector((state) => state.counter.active);
+  const maxError = useAppSelector(selectMaxError);
+  const minError = useAppSelector(selectMinError);
+  const minValue = useAppSelector(selectMinValue);
+  const maxValue = useAppSelector(selectMaxValue);
+  const active = useAppSelector(selectActive);
   const maxValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const targetValueMax = Number(e.target.value);
     const currentMinValue = minValue;
     dispatch(setActiveAC({ isActive: false }));
     dispatch(setMaxValueAC({ value: targetValueMax }));
 
-    // Проверяем ошибки только для max значения
     if (targetValueMax <= currentMinValue) {
       dispatch(setMaxErrorAC({ isError: true }));
     } else {

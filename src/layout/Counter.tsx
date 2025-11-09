@@ -2,41 +2,33 @@ import "../app/App.css";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { Paper, Typography, Alert } from "@mui/material";
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from '../common/hooks/useAppSelector';
+import { setCountAC } from '../model/counter-reducer';
 
-type CounterPropsType = {
-  count: number;
-  setCount: (count: number) => void;
-  minValue: number;
-  maxValue: number;
-  maxError: boolean;
-  minError: boolean;
-  active: boolean;
-};
 
-export const Counter = ({
-  count,
-  setCount,
-  minValue,
-  maxValue,
-  maxError,
-  minError,
-  active,
-}: CounterPropsType) => {
+export const Counter = () => {
+  const dispatch = useDispatch();
+  const count = useAppSelector(state => state.counter.count)
+  const maxError = useAppSelector((state) => state.errors.maxError);
+  const minError = useAppSelector((state) => state.errors.minError);
+  const minValue = useAppSelector((state) => state.counter.minValue);
+  const maxValue = useAppSelector((state) => state.counter.maxValue);
+  const active = useAppSelector((state) => state.counter.active);
   const incCounter = () => {
-    if (maxValue - count > 0) {
-      setCount(count + 1);
+    if (count < maxValue) {
+      dispatch(setCountAC({count: count + 1}))
     }
   };
 
   const onClickReset = () => {
-    setCount(minValue);
+    dispatch(setCountAC({ count: minValue }));
   };
 
   const hasAnyError = maxError || minError;
 
   return (
     <Box className="wrapper">
-      {/* Сообщения */}
       {!active && !hasAnyError && (
         <Alert severity="info" sx={{ mb: 2 }}>
           Enter value and press set
