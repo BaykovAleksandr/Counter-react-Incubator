@@ -1,5 +1,5 @@
 import { type ChangeEvent } from "react";
-import "../App.css";
+import "../app/App.css";
 import { Input } from "../components/Input";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";

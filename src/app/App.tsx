@@ -1,11 +1,11 @@
 import "./App.css";
 import Box from "@mui/material/Box";
-import { Setter } from "./layout/Setter";
-import { Counter } from "./layout/Counter";
+import { Setter } from "../layout/Setter";
+import { Counter } from "../layout/Counter";
 import { useEffect, useState } from "react";
 import { Container, ThemeProvider, CssBaseline } from "@mui/material";
-import ButtonAppBar from "./components/ButtonAppBar";
-import { lightTheme, darkTheme } from "./components/theme";
+import ButtonAppBar from "../components/ButtonAppBar";
+import { lightTheme, darkTheme } from "../components/theme";
 
 function App() {
   const [maxValue, setMaxValue] = useState(5);
