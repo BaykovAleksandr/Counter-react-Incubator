@@ -1,23 +1,34 @@
-import { beforeEach, expect, test } from 'vitest';
-import { errorsReducer, setMaxErrorAC, setMinErrorAC, type initialStateErrorType } from './errors-reducer';
+import { beforeEach, expect, test } from "vitest";
+import {
+  errorsReducer,
+  setMaxErrorAC,
+  setMinErrorAC,
+  type initialStateErrorType,
+} from "./errors-reducer";
 
-let startState: initialStateErrorType; 
+let startState: initialStateErrorType;
 
 beforeEach(() => {
-	startState = {
+  startState = {
     maxError: false,
     minError: false,
   };
-})
+});
 
-test('correct errors logic should change maxError status', () => {
-	const endState = errorsReducer(startState, setMaxErrorAC({ isError: true }))
-	expect(endState.maxError).toBe(true);
-	expect(endState.minError).toBe(false);
-})
+test("correct errors logic should change maxError status", () => {
+  const endState = errorsReducer(startState, setMaxErrorAC({ isError: true }));
+  expect(endState.maxError).toBe(true);
+  expect(endState.minError).toBe(false);
+});
 
 test("correct errors logic should change minError status", () => {
   const endState = errorsReducer(startState, setMinErrorAC({ isError: true }));
   expect(endState.minError).toBe(true);
-  expect(endState.maxError).toBe(false); 
+  expect(endState.maxError).toBe(false);
+});
+
+test("correct errors logic should not mutate initial state", () => {
+  const originalState = { ...startState };
+  errorsReducer(startState, setMinErrorAC({ isError: true }));
+  expect(startState).toEqual(originalState);
 });

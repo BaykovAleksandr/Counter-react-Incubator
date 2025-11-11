@@ -10,7 +10,7 @@ export const setCountAC = createAction<{ count: number }>("counter/set_count");
 export const setActiveAC = createAction<{ isActive: boolean }>(
   "counter/set_active"
 );
-type initialStateType = {
+export type initialStateType = {
   maxValue: number;
   minValue: number;
   count: number;

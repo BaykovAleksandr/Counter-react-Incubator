@@ -2,14 +2,13 @@ import "../app/App.css";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { Paper, Typography, Alert } from "@mui/material";
-import { useDispatch } from 'react-redux';
-import { useAppSelector } from '../common/hooks/useAppSelector';
-import { setCountAC } from '../model/counter-reducer';
-
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../common/hooks/useAppSelector";
+import { setCountAC } from "../model/counter-reducer";
 
 export const Counter = () => {
   const dispatch = useDispatch();
-  const count = useAppSelector(state => state.counter.count)
+  const count = useAppSelector((state) => state.counter.count);
   const maxError = useAppSelector((state) => state.errors.maxError);
   const minError = useAppSelector((state) => state.errors.minError);
   const minValue = useAppSelector((state) => state.counter.minValue);
@@ -17,7 +16,7 @@ export const Counter = () => {
   const active = useAppSelector((state) => state.counter.active);
   const incCounter = () => {
     if (count < maxValue) {
-      dispatch(setCountAC({count: count + 1}))
+      dispatch(setCountAC({ count: count + 1 }));
     }
   };
 
@@ -40,7 +39,6 @@ export const Counter = () => {
         </Alert>
       )}
 
-      {/* Счетчик */}
       {active && (
         <Paper
           elevation={3}
@@ -65,7 +63,6 @@ export const Counter = () => {
         </Paper>
       )}
 
-      {/* Кнопки */}
       <Paper elevation={3} sx={{ p: 2 }}>
         <Box sx={{ display: "flex", gap: 2 }}>
           <Button
