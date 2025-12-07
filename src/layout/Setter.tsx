@@ -5,20 +5,18 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { Paper, FormControl } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { setMaxErrorAC, setMinErrorAC } from "../model/errors-reducer";
+import { selectMaxError, selectMinError, setMaxErrorAC, setMinErrorAC } from "../model/errors-reducer";
 import { useAppSelector } from "../common/hooks/useAppSelector";
 import {
+  selectActive,
+  selectMaxValue,
+  selectMinValue,
   setActiveAC,
   setCountAC,
   setMaxValueAC,
   setMinValueAC,
 } from "../model/counter-reducer";
-import { selectMaxError, selectMinError } from "../model/errors-selectors";
-import {
-  selectActive,
-  selectMaxValue,
-  selectMinValue,
-} from "../model/counter-selectors";
+
 
 export const Setter = () => {
   const dispatch = useDispatch();

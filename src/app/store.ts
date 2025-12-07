@@ -1,17 +1,16 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { errorsReducer } from '../model/errors-reducer';
-import { counterReducer } from '../model/counter-reducer';
+import { configureStore } from "@reduxjs/toolkit";
+import { counterReducer, counterSlice } from '../model/counter-reducer';
+import { errorsReducer, errorsSlice } from '../model/errors-reducer';
 
 
-// объединение reducer'ов с помощью combineReducers
-const rootReducer = combineReducers({
-errors: errorsReducer,
-counter: counterReducer
-});
+
 
 // создание store
 export const store = configureStore({
-  reducer: rootReducer,
+  reducer: {
+    [errorsSlice.name]: errorsReducer,
+    [counterSlice.name]: counterReducer,
+  },
 });
 
 // автоматическое определение типа всего объекта состояния

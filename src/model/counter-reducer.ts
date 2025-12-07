@@ -1,15 +1,5 @@
-import { createAction, createReducer } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-export const setMaxValueAC = createAction<{ value: number }>(
-  "counter/set_max_value"
-);
-export const setMinValueAC = createAction<{ value: number }>(
-  "counter/set_min_value"
-);
-export const setCountAC = createAction<{ count: number }>("counter/set_count");
-export const setActiveAC = createAction<{ isActive: boolean }>(
-  "counter/set_active"
-);
 export type initialStateType = {
   maxValue: number;
   minValue: number;
@@ -17,25 +7,40 @@ export type initialStateType = {
   active: boolean;
 };
 
-const initialState: initialStateType = {
-  maxValue: 5,
-  minValue: 1,
-  count: 0,
-  active: true,
-};
-
-export const counterReducer = createReducer(initialState, (builder) => {
-  builder
-    .addCase(setMaxValueAC, (state, action) => {
+export const counterSlice = createSlice({
+  name: "counter",
+  initialState: {
+    maxValue: 5,
+    minValue: 1,
+    count: 0,
+    active: true,
+  } as initialStateType,
+  selectors: {
+    selectMinValue: (state) => state.minValue,
+    selectMaxValue: (state) => state.maxValue,
+    selectActive: (state) => state.active,
+    selectCount: (state) => state.count,
+  },
+  reducers: (create) => ({
+    setMaxValueAC: create.reducer<{ value: number }>((state, action) => {
       state.maxValue = action.payload.value;
-    })
-    .addCase(setMinValueAC, (state, action) => {
+    }),
+    setMinValueAC: create.reducer<{ value: number }>((state, action) => {
       state.minValue = action.payload.value;
-    })
-    .addCase(setCountAC, (state, action) => {
+    }),
+    setCountAC: create.reducer<{ count: number }>((state, action) => {
       state.count = action.payload.count;
-    })
-    .addCase(setActiveAC, (state, action) => {
+    }),
+    setActiveAC: create.reducer<{ isActive: boolean }>((state, action) => {
       state.active = action.payload.isActive;
-    });
+    }),
+  }),
 });
+
+export const { setActiveAC, setCountAC, setMaxValueAC, setMinValueAC } =
+  counterSlice.actions;
+
+  export const { selectMinValue, selectMaxValue, selectActive, selectCount } =
+    counterSlice.selectors;
+
+export const counterReducer = counterSlice.reducer;
